@@ -1,0 +1,5 @@
+({
+    loadBoatTypes: function(component){
+    
+       },
+})

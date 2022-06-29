@@ -1,0 +1,8 @@
+<apex:page standardController="Employee__c">
+    <apex:form >
+        Emp Name : <apex:inputField value="{!Employee__c.Name__c}"/><br/>
+        Grade : <apex:inputField value="{!Employee__c.Grade__c}"/>
+        <apex:commandButton action="{!Save}" Value="Save"/>
+    </apex:form>
+    
+</apex:page>

@@ -1,0 +1,50 @@
+<aura:component controller="CaseManager">
+    <aura:attribute name="caseData" type="Case" default="{ 'sObjectType': 'Case',
+                        'Subject': '',
+                        'Status': 'New',
+                        'Priority': 'High',
+                        'Date__c': '',
+                        'SuppliedCompany': '', 'CaseNumber':''}"/>
+    <aura:attribute name="cases" type="Case[]"/>
+    <aura:attribute name="statusValues" type="String[]"/>
+    <aura:attribute name="priorityValues" type="String[]"/>
+    
+   <aura:handler name="init" value="{! this }" action="{! c.init }"/> 
+    <lightning:card title="Create Case" iconName="standard:case">
+        {!v.statusValues}
+    	<form class="slds-form--stacked slds-p-left_x-small slds-p-right_x-small">          
+            <lightning:input aura:id="caseForm" label="Subject"
+                             name="caseSubject"
+                             value="{!v.caseData.Subject}"
+                             required="true"/> 
+
+            <lightning:select name="select" label="Status" required="true"
+                              value="{!v.caseData.Status}">                
+                <aura:iteration items="{!v.statusValues}" var="status">
+                     <option value="{!status}" text="{!status}"></option>
+                </aura:iteration>
+    		</lightning:select>
+
+            <lightning:select name="select" label="Priority" required="true" 
+                              			value="{!v.caseData.Priority}">
+                <aura:iteration items="{!v.priorityValues}" var="priority">
+                    <option value="{!priority}" text="{!priority}"></option>
+                </aura:iteration>
+    		</lightning:select>
+            
+            <lightning:input type="date" aura:id="caseForm" label="Due Date"
+                             name="caseDueDate"
+                             value="{!v.caseData.Date_Due__c}"/>
+            
+            <lightning:textarea aura:id="caseForm" label="SuppliedCompany"  
+                             name="caseSuppliedCompany"
+                             value="{!v.caseData.SuppliedCompany}" maxlength="300"/>
+            
+            <lightning:button label="Create Case" 
+                              class="slds-m-top--medium"
+                              variant="brand"
+                              onclick="{!c.clickCreate}"/>
+        </form>
+      </lightning:card>
+    <c:CaseListCmp cases="{!v.cases}"/>
+</aura:component>

@@ -1,0 +1,13 @@
+<aura:component implements="force:appHostable">
+    <aura:attribute name="selectedCaseId" type="String"/>
+    <aura:handler name="OpenCase" event="c:OpenCase" action="{!c.openCaseDetails}"/>
+   <div class="demo-only demo-only--sizing slds-grid slds-wrap">
+      <div class="slds-size_1-of-2">
+        <c:CaseCreate/>
+      </div>
+      <div class="slds-size_1-of-2">
+          <c:CaseDetails caseId="{!v.selectedCaseId}"/>
+      </div>
+    </div>
+    
+</aura:component>

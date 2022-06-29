@@ -1,0 +1,41 @@
+<aura:component controller="ContactAura" >
+    <!--<aura:attribute name="accountRows" type="Object[]"/>-->
+    <aura:attribute type="Account[]" name="acctList"/>
+    <aura:attribute name="mycolumns" type="List"/>
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+   <div class="container">
+        <!--
+        <p>
+        	<b> List of Accounts </b>
+        </p>
+        
+        <table aria-multiselectable="true" class="slds-table slds-table_bordered slds-table_fixed-layout slds-table_resizable-cols" role="grid">
+            <thead>
+                <tr>
+                    <th><strong> Id </strong></th>
+                    <th> <strong>  Name </strong> </th>
+                </tr>
+            </thead>
+            <tbody>
+                <aura:iteration var="cell" items="{!v.accountRows}">
+                    <tr>
+                        <td> <a href="{! '/'+cell.Id}"> {!cell.Id} </a> </td>
+                        <td> {!cell.Name}  </td>
+                    </tr>
+                </aura:iteration>
+            </tbody>
+        </table>
+        
+         
+        
+ 	</div>-->
+    
+      <lightning:datatable data="{! v.acctList }"
+                         columns="{! v.mycolumns }"
+                         keyField="id"
+                         hideCheckboxColumn="false"/>
+    </div>
+    
+    
+</aura:component>

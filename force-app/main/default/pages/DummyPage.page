@@ -1,0 +1,9 @@
+<apex:page standardController="Dummy_Object__c">
+<apex:form >
+<apex:pageBlock >
+<apex:pageBlockSection >
+ <apex:inputField value="{!Dummy_Object__c.nombre__c}"/>
+ </apex:pageBlockSection>
+ </apex:pageBlock>
+ </apex:form>
+</apex:page>

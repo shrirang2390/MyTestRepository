@@ -1,0 +1,11 @@
+<aura:component implements="flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+            <aura:attribute name="fields" type="String[]" default="['Subject','Status','Priority']" />
+            <aura:attribute name="recordId" type="String"/>
+            <lightning:notificationsLibrary aura:id="notifLib"/>
+	<lightning:card title="Create Case">
+            <lightning:recordForm
+                    objectApiName="Case"
+                    fields="{!v.fields}"
+                    onsuccess="{!c.handleSuccess}" columns="2" />
+    </lightning:card>
+</aura:component>

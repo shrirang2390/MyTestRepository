@@ -1,0 +1,25 @@
+<aura:component >
+    <aura:attribute name="caseId" type="String"/>
+
+     <aura:attribute name="fields" type="String[]" default="['CaseNumber','Subject','Status','Priority','Date_Due__c','SuppliedCompany']" />
+    <lightning:card title="Case Details" iconName="standard:case">
+   <!-- <lightning:recordViewForm 
+        recordId="{!v.caseId}"
+        objectApiName="Case">
+         <lightning:messages />
+            <div class="slds-grid">
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Subject"/>
+                </div>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning:inputField fieldName="Priority"/>
+                </div>
+            </div>
+        <lightning:button class="slds-m-top_small" type="submit" label="Create new" />
+    </lightning:recordViewForm>-->
+         <lightning:recordForm recordId="{!v.caseId}" 
+                          objectApiName="Case"
+                          mode="readonly"
+                          fields="{!v.fields}" />
+    </lightning:card>
+</aura:component>

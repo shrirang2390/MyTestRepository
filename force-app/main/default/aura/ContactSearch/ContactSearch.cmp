@@ -1,0 +1,27 @@
+<aura:component controller="ContactManager">
+	<aura:attribute name="issearching" type="Boolean" default="false"/>
+    <aura:attribute name="contacts" type="Contact[]"/>
+    
+	<aura:attribute name="isResultFound" type="Boolean" default="false"/>
+     <lightning:card title="Search Contact">
+        <p class="slds-p-horizontal_small">
+                <div onkeyup="{! c.handleKeyUp }">
+        <lightning:input
+            aura:id="enter-search"
+            name="enter-search"
+            label="Search when user hits the 'enter' key"
+            isLoading="{! v.issearching }"
+            type="search"
+        />
+    </div>
+        </p>
+    </lightning:card>
+	<lightning:card title="Search Results">
+         <p class="slds-p-horizontal_small">
+    		<c:ContactList contacts="{!v.contacts}" found="{!v.isResultFound}"/>
+        </p>
+ 	</lightning:card>
+    
+    
+    
+</aura:component>

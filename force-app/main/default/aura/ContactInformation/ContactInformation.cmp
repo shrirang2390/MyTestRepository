@@ -1,0 +1,10 @@
+<aura:component implements="force:appHostable" >
+	<div class="demo-only demo-only--sizing slds-grid slds-wrap">
+      <div class="slds-size_1-of-2">
+        <c:ContactSearch/>
+      </div>
+      <div class="slds-size_1-of-2">
+          
+      </div>
+    </div>
+</aura:component>

@@ -1,0 +1,15 @@
+<apex:page controller="ViewStateErrorCtrl">
+    <apex:form >
+  <!-- Begin Default Content REMOVE THIS -->
+  <apex:outputText value="{!info}"></apex:outputText>
+    <apex:outputText value="{!info1}"></apex:outputText>
+      <apex:outputText value="{!info2}"></apex:outputText>
+        <apex:outputText value="{!info3}"></apex:outputText>
+                <apex:outputText value="{!info4}"></apex:outputText>
+                        <apex:outputText value="{!info5}"></apex:outputText>
+                                <apex:outputText value="{!info6}"></apex:outputText>
+        <c:ViewStateComp info="{!info}"></c:ViewStateComp>
+			<apex:outputText value="{!info7}"></apex:outputText>
+        </apex:form>
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>

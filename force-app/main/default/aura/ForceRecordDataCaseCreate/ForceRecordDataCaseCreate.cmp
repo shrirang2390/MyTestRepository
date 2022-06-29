@@ -1,0 +1,31 @@
+<aura:component implements="force:appHostable">
+    <aura:attribute name="newCase" type="Object"/>
+    <!--<aura:attribute name="newSampleCase" type="Object"/>-->
+     <aura:attribute name="newSampleCase" type="Case" 
+               default="{ 'sobjectType': 'Case' }"/>
+    
+    <aura:attribute name="newCaseError" type="String"/>
+    
+    <!--Define force:Recorddata-->
+    <force:recordData aura:id="caseCreator"
+    layoutType="FULL" targetRecord="{!v.newCase}"
+     targetFields="{!v.newSampleCase}"    
+      targetError="{!v.newCaseError}"/>
+	
+    <!--Define init handler to define the template for record-->
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
+    {!v.newSampleCase.Priority}---
+    <lightning:card iconName="action:new_case" title="Create Case">
+        <div class="slds-p-horizontal--small">
+            <lightning:input aura:id="caseFieldSubj" label="Subject" value="{!v.newSampleCase.Subject}" required="true"/>
+            <!--<force:inputField aura:id="caseField" required="true" value="{!v.newSampleCase.Subject}"/>-->
+            <!--<lightning:inputField aura:id="caseField" label="Status" value="{!v.newSampleCase.Status}"/>-->
+             <!--<force:inputField aura:id="caseField" required="true" value="{!v.newSampleCase.Status}"/>-->
+            
+            <!--<lightning:inputField aura:id="caseField" label="Priority" value="{!v.newSampleCase.Priority}"/>-->
+            <!--<force:inputField aura:id="caseField" required="true" value="{!v.newSampleCase.Priority}"/>-->
+            <br/>
+            <lightning:button label="Save Case" variant="brand" onclick="{!c.handleSaveCase}"/>
+        </div>
+    </lightning:card>
+</aura:component>

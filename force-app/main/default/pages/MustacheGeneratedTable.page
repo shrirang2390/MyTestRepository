@@ -1,0 +1,206 @@
+<apex:page controller="AccountRemoter">
+
+    <apex:slds />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+   <apex:includeScript value="{!URLFOR($Resource.Mustache)}" />
+        <script type="text/javascript">
+    	$(document).ready(function() {
+            //getAllAccounts();
+		});
+    </script>
+
+    <div class="slds">
+    
+    <div class="slds-grid slds-col-2-of-2">
+        <div class="slds-col-1-of-2">
+    		<p id="person"></p>        
+        </div>
+        <div class="slds-col-1-of-2">
+    		<p id="contactData"></p>
+        </div>
+    </div>
+
+    <script id="sample_template_table" type="text/html">
+    <div class="slds-table slds-table_bordered slds-m-top--small slds-size--1-of-1">
+         <table>
+         	<tr class="slds-text-title_caps">
+        		<th>Id</th>
+                    <th>Name</th>
+         	</tr>
+         	{{#array}}
+         	<tr>
+         		<td>{{Id}}</td>
+         		<td>{{Name}}</td>
+         	</tr>
+         	{{/array}}
+         </table>
+     </div>
+   </script> 
+    <script id="sample_template_accordian" type="text/html">
+    <div class="slds-table slds-table_bordered slds-m-top--small slds-size--1-of-1">
+         <ul class="slds-accordion">
+             {{#array}}
+              <li class="slds-accordion__list-item">
+                <section class="slds-accordion__section slds-is-open">
+                  <div class="slds-accordion__summary">
+                    <h3 class="slds-text-heading_small slds-accordion__summary-heading">
+                      <button aria-controls="accordion-details-01" aria-expanded="true" class="slds-button slds-button_reset slds-accordion__summary-action">
+                        <svg class="slds-accordion__summary-action-icon slds-button__icon slds-button__icon_left" aria-hidden="true">
+              			  <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#switch')}">
+                        </svg>
+              
+                        <span class="slds-truncate" title="Accordion summary">{{Name}}</span>
+                      </button>
+                    </h3>
+                    <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small slds-shrink-none" aria-haspopup="true">
+                      <svg class="slds-button__icon" aria-hidden="true">
+                         <use xlink:href="{!URLFOR($Asset.SLDS, '/assets/icons/utility-sprite/svg/symbols.svg#down')}">
+                      </svg>
+                      <span class="slds-assistive-text">More Options</span>
+                    </button>
+                  </div>
+                  {{#contactArray}}
+                  	<div aria-hidden="false" class="slds-accordion__content" id="accordion-details-01">{{Name}}</div>
+                  {{/contactArray}}
+                </section>
+              </li>
+              {{/array}}
+      </ul>
+   </script> 
+        
+        
+    <script type="text/javascript">
+    var accounts = {
+                        array : null
+                      }
+    var accountList = [];
+   
+	var contactList = [];
+    function getAllAccounts() {
+		var accountName='';
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.AccountRemoter.getAllAccounts}',
+            accountName,
+            function(result, event){
+                if (event.status) {
+                    var accountArray=[];
+                    for(var i=0;i<result.length;i++)
+                    {
+                        var new_account = {Name:result[i].Name,Id:result[i].Id};
+                        accountArray.push(new_account);
+                    }
+                    accountList ={array : accountArray}
+                                        
+                    //document.getElementById('remoteAcctId').innerHTML = accounts.array[0].Id;
+                    var template = document.getElementById('sample_template_table').innerHTML;
+  					var output = Mustache.render(template, accountList);
+  					document.getElementById('person').innerHTML = output;
+             
+                    
+                } else if (event.type === 'exception') {
+                    document.getElementById("responseErrors").innerHTML = 
+                        event.message + "<br/>\n<pre>" + event.where + "</pre>";
+                } else {
+                    document.getElementById("responseErrors").innerHTML = event.message;
+                }
+            }, 
+            {escape: true}
+        );
+    }
+    
+    
+     function getAllContacts() {
+		var accountName='';
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.AccountRemoter.getAllContacts}',
+            accountName,
+            function(result, event){
+                if (event.status) {
+                    var contactArray=[];
+                    for(var i=0;i<result.length;i++)
+                    {
+                        var new_cntct = {Name:result[i].Name,Id:result[i].Id};
+                        contactArray.push(new_cntct);
+                    }
+                    contactList ={array : contactArray}
+                                        
+                    //document.getElementById('remoteAcctId').innerHTML = accounts.array[0].Id;
+                    var template = document.getElementById('sample_template_table').innerHTML;
+  					var output = Mustache.render(template, contactList);
+  					document.getElementById('contactData').innerHTML = output;
+             
+                    
+                } else if (event.type === 'exception') {
+                    document.getElementById("responseErrors").innerHTML = 
+                        event.message + "<br/>\n<pre>" + event.where + "</pre>";
+                } else {
+                    document.getElementById("responseErrors").innerHTML = event.message;
+                }
+            }, 
+            {escape: true}
+        );
+    }
+    
+     function getAllActContacts() {
+		var accountName='';
+        Visualforce.remoting.Manager.invokeAction(
+            '{!$RemoteAction.AccountRemoter.getAllAccountRelatedContacts}',
+            accountName,
+            function(result, event){
+                if (event.status) {
+                    
+                    var cntArray=[];
+                    var actArray=[];
+                    var contactArray =[];
+                    for(var i=0;i<result.length;i++)
+                    {
+                        var cntname='';
+                        if(result[i].Contacts!=null)
+                        {
+                            //temp='No';
+                            var cntct = result[i].Contacts;
+                            for(var j=0;j<cntct.length;j++)
+                    		{
+                                 var cntname={Name:cntct[j].Name,Id:cntct[j].Id}
+                                 cntArray.push(newAct);
+                                alert(cntct[j].Name);
+                            }
+                            //alert(cntct.length);
+                            
+                        }
+                        var newAct = {Name:result[i].Name,Id:result[i].Id,contactArray:cntArray};
+                        
+                        actArray.push(newAct);
+                    }
+                    contactList ={array : actArray}
+                                        
+                    //document.getElementById('remoteAcctId').innerHTML = accounts.array[0].Id;
+                    var template = document.getElementById('sample_template_accordian').innerHTML;
+  					var output = Mustache.render(template, contactList);
+  					document.getElementById('contactData').innerHTML = output;
+             
+                    
+                } else if (event.type === 'exception') {
+                    document.getElementById("responseErrors").innerHTML = 
+                        event.message + "<br/>\n<pre>" + event.where + "</pre>";
+                } else {
+                    document.getElementById("responseErrors").innerHTML = event.message;
+                }
+            }, 
+            {escape: true}
+        );
+    }
+        
+        
+    
+    </script>
+
+    <input id="acctSearch" class="slds-input" type="text"/>
+    
+    <button onclick="getAllAccounts()" class="slds-button slds-button_brand">Get All Account</button>
+    <button onclick="getAllContacts()" class="slds-button slds-button_brand">Get All Contacts</button>
+	<button onclick="getAllActContacts()" class="slds-button slds-button_brand">Get All Account and Contacts</button>    
+    <div id="responseErrors"></div>
+
+    </div>
+</apex:page>
